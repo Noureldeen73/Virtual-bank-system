@@ -28,12 +28,13 @@ public class UserServiceController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody Users user){
+        System.out.println(user.toString());
         try {
             userService.registerUser(user);
             Map<String,Object> response = new HashMap<>();
-            response.put("userId:", user.getId());
-            response.put("username:", user.getUsername());
-            response.put("message:", "User registered successfully");
+            response.put("userId", user.getId());
+            response.put("username", user.getUsername());
+            response.put("message", "User registered successfully");
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (IllegalStateException e) {
             Map<String, String> errorResponse = new HashMap<>();
