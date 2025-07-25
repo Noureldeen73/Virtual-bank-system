@@ -22,4 +22,5 @@ public interface TransactionsService {
 
     Transaction getTransactionById(UUID transactionId);
 
+    Transaction getLatestTransactionByAccountId(UUID accountId);
 }

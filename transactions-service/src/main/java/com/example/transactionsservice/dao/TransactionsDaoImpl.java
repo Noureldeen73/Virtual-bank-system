@@ -1,6 +1,5 @@
 package com.example.transactionsservice.dao;
 
-
 import com.example.transactionsservice.model.Transaction;
 import com.example.transactionsservice.model.TransactionStatus;
 import jakarta.persistence.EntityManager;
@@ -11,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class TransactionsDaoImpl implements TransactionsDao{
+public class TransactionsDaoImpl implements TransactionsDao {
 
     @Autowired
     EntityManager entityManager;
@@ -44,7 +43,8 @@ public class TransactionsDaoImpl implements TransactionsDao{
     @Override
     public List<Transaction> getTransactionsByAccountId(UUID accountId) {
         return entityManager.createQuery(
-                "SELECT t FROM Transaction t WHERE t.from_account_id = :accountId or t.to_account_id = :accountId", Transaction.class)
+                "SELECT t FROM Transaction t WHERE t.from_account_id = :accountId or t.to_account_id = :accountId",
+                Transaction.class)
                 .setParameter("accountId", accountId)
                 .getResultList();
     }
@@ -57,5 +57,16 @@ public class TransactionsDaoImpl implements TransactionsDao{
     @Override
     public Transaction getTransactionById(UUID transactionId) {
         return entityManager.find(Transaction.class, transactionId);
+    }
+
+    @Override
+    public Transaction getLatestTransactionByAccountId(UUID accountId) {
+        List<Transaction> transactions = entityManager.createQuery(
+                "SELECT t FROM Transaction t WHERE t.from_account_id = :accountId or t.to_account_id = :accountId ORDER BY t.created_at DESC",
+                Transaction.class)
+                .setParameter("accountId", accountId)
+                .setMaxResults(1)
+                .getResultList();
+        return transactions.isEmpty() ? null : transactions.get(0);
     }
 }

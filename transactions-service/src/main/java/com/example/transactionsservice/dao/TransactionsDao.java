@@ -18,4 +18,6 @@ public interface TransactionsDao {
     List<Transaction> getAllTransactions();
 
     Transaction getTransactionById(UUID transactionId);
+
+    Transaction getLatestTransactionByAccountId(UUID accountId);
 }
