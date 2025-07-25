@@ -6,6 +6,7 @@ import com.example.transactionsservice.model.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -23,6 +24,7 @@ public class TransactionsServiceImpl implements TransactionsService {
     private RestTemplate restTemplate;
 
     @Override
+    @Transactional
     public Transaction initiateTransaction(Transaction transaction) {
         if (transaction.getTo_account_id() == null || transaction.getFrom_account_id() == null) {
             throw new IllegalArgumentException("Invalid accounts or insufficient amount");
@@ -44,6 +46,7 @@ public class TransactionsServiceImpl implements TransactionsService {
     }
 
     @Override
+    @Transactional
     public Transaction executeTransaction(Transaction transaction) {
         if (transaction.getTo_account_id() == null || transaction.getFrom_account_id() == null) {
             throw new IllegalArgumentException("Invalid accounts or insufficient amount");

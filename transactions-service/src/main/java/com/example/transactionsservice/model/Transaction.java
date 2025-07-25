@@ -1,8 +1,9 @@
 package com.example.transactionsservice.model;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,18 +17,17 @@ public class Transaction {
     @GeneratedValue
     private UUID id;
 
-    @NotBlank(message = "Transaction ID cannot be blank")
+    @NotNull(message = "Transaction ID cannot be blank")
     @Column(nullable = false)
     private UUID from_account_id;
 
-    @NotBlank(message = "Transaction ID cannot be blank")
+    @NotNull(message = "Transaction ID cannot be blank")
     @Column(nullable = false)
     private UUID to_account_id;
 
-    @NotBlank(message = "Amount cannot be blank")
-    @Column(nullable = false, scale = 15, precision = 2)
+    @NotNull
+    @Positive // ensures amount > 0
     private BigDecimal amount;
-
 
     @Column(nullable = true, length = 255)
     private String description;

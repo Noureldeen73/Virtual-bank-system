@@ -27,9 +27,7 @@ public class TransactionsController {
 
     }
 
-    @RequestMapping("/transactions")
-
-    @PostMapping("transfer/initiate")
+    @PostMapping("/transactions/transfer/initiate")
     public ResponseEntity<?> initiateTransfer(@RequestBody Transaction transaction) {
         try {
             transaction = transactionsService.initiateTransaction(transaction);
@@ -43,7 +41,7 @@ public class TransactionsController {
         }
     }
 
-    @PostMapping("transfer/execution")
+    @PostMapping("/transactions/transfer/execution")
     public ResponseEntity<?> executeTransfer(@RequestBody Transaction transaction) {
         try {
             transaction = transactionsService.executeTransaction(transaction);
