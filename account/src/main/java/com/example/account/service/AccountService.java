@@ -11,6 +11,7 @@ import com.example.account.dto.CreateAccountRequest;
 import com.example.account.dto.TransferRequest;
 import com.example.account.dto.UserResponse;
 import com.example.account.model.Account;
+import com.example.account.model.AccountStatus;
 import com.example.account.model.AccountType;
 import com.example.account.repository.AccountRepository;
 
@@ -44,11 +45,20 @@ public class AccountService {
     }
 
     public AccountResponse createAccount(CreateAccountRequest request) {
+        if (request.getInitialBalance() == null || request.getInitialBalance().signum() < 0) {
+            throw new IllegalArgumentException("Invalid account type or initial balance.");
+        }
+        AccountType type;
+        try {
+            type = AccountType.valueOf(request.getAccountType());
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid account type or initial balance.");
+        }
         Account account = Account.builder()
                 .accountNumber(UUID.randomUUID().toString().substring(0, 10))
-                .accountType(AccountType.valueOf(request.getAccountType()))
+                .accountType(type)
                 .balance(request.getInitialBalance())
-                .status("ACTIVE")
+                .status(AccountStatus.ACTIVE)
                 .userId(request.getUserId())
                 .build();
 
@@ -86,6 +96,6 @@ public class AccountService {
                 acc.getAccountNumber(),
                 acc.getAccountType().name(),
                 acc.getBalance(),
-                acc.getStatus());
+                acc.getStatus().name());
     }
 }

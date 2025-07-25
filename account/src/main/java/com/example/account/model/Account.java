@@ -29,7 +29,8 @@ public class Account {
     @Column(nullable = false)
     private BigDecimal balance;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private AccountStatus status;
 
     @Column(nullable = false)
     private UUID userId;
