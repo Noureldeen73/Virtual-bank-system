@@ -45,9 +45,18 @@ public class AccountService {
     }
 
     public AccountResponse createAccount(CreateAccountRequest request) {
+        if (request.getInitialBalance() == null || request.getInitialBalance().signum() < 0) {
+            throw new IllegalArgumentException("Invalid account type or initial balance.");
+        }
+        AccountType type;
+        try {
+            type = AccountType.valueOf(request.getAccountType());
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid account type or initial balance.");
+        }
         Account account = Account.builder()
                 .accountNumber(UUID.randomUUID().toString().substring(0, 10))
-                .accountType(AccountType.valueOf(request.getAccountType()))
+                .accountType(type)
                 .balance(request.getInitialBalance())
                 .status(AccountStatus.ACTIVE)
                 .userId(request.getUserId())
