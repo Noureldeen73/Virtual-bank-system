@@ -19,8 +19,12 @@ public class AccountController {
 
     @PutMapping("/accounts/transfer")
     public ResponseEntity<?> transfer(@RequestBody TransferRequest req) {
-        service.transfer(req);
-        return ResponseEntity.ok(java.util.Map.of("message", "Account updated successfully."));
+        try{
+            service.transfer(req);
+            return ResponseEntity.ok(java.util.Map.of("message", "Account updated successfully."));
+        }catch (RuntimeException e){
+            return ResponseEntity.status(400).body(e.getMessage());
+        }
     }
 
     @PostMapping("/accounts")

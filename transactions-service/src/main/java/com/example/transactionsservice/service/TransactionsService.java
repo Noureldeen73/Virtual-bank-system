@@ -1,5 +1,6 @@
 package com.example.transactionsservice.service;
 
+import com.example.transactionsservice.dto.TransactionDto;
 import com.example.transactionsservice.model.Transaction;
 
 import java.util.List;
@@ -8,15 +9,15 @@ import java.util.UUID;
 
 public interface TransactionsService {
 
-    Transaction initiateTransaction(Transaction transaction);
+    Transaction initiateTransaction(TransactionDto transaction);
 
-    Transaction executeTransaction(Transaction transaction);
+    Transaction executeTransaction(TransactionDto transaction);
 
     void transactionSuccess(UUID transactionId);
 
     void transactionFailed(UUID transactionId);
 
-    Map<Transaction, Character> getTransactionsByAccountId(UUID accountId);
+    Map<String, Object> getTransactionsByAccountId(UUID accountId);
 
     List<Transaction> getAllTransactions();
 

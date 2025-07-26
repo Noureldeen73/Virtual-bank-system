@@ -12,7 +12,7 @@ public class TransactionClient {
     @Autowired
     private RestTemplate restTemplate;
 
-    private final String TRANSACTION_SERVICE_BASE_URL = "http://localhost:8083";
+    private final String TRANSACTION_SERVICE_BASE_URL = "http://localhost:8082";
 
     public Instant getLatestTransactionTimestamp(UUID accountId) {
         String url = TRANSACTION_SERVICE_BASE_URL + "/transactions/latest?accountId=" + accountId;

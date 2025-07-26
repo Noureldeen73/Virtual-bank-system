@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import com.example.account.dto.AccountResponse;
@@ -24,7 +25,7 @@ public class AccountService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private final String USER_SERVICE_BASE_URL = "http://localhost:8082/users";
+    private final String USER_SERVICE_BASE_URL = "http://localhost:8080/users";
 
     public UserResponse fetchUserDetails(UUID userId) {
         String url = USER_SERVICE_BASE_URL + "/" + userId + "/profile";
@@ -79,13 +80,20 @@ public class AccountService {
         Account to = repository.findById(req.getToAccountId())
                 .orElseThrow(() -> new RuntimeException("To account not found"));
 
-        if (from.getBalance().compareTo(req.getAmount()) < 0) {
-            throw new RuntimeException("Insufficient balance");
+        ResponseEntity<?> initiationResponse = restTemplate.postForEntity(
+                "http://localhost:8082/transactions/transfer/initiation",
+                req, Object.class);
+        if (initiationResponse.getStatusCode().isError()) {
+            throw new RuntimeException(initiationResponse.getBody().toString());
         }
-
+        ResponseEntity<?> executionResponse = restTemplate.postForEntity(
+                "http://localhost:8082/transactions/transfer/execution",
+                req, Object.class);
+        if (executionResponse.getStatusCode().isError()) {
+            throw new RuntimeException(executionResponse.getBody().toString());
+        }
         from.setBalance(from.getBalance().subtract(req.getAmount()));
         to.setBalance(to.getBalance().add(req.getAmount()));
-
         repository.save(from);
         repository.save(to);
     }
