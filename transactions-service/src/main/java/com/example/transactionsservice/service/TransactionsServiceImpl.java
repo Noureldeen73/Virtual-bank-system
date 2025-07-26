@@ -26,10 +26,10 @@ public class TransactionsServiceImpl implements TransactionsService {
     private RestTemplate restTemplate;
 
     @Override
-    @Transactional
+    @Transactional(noRollbackFor = IllegalArgumentException.class)
     public Transaction initiateTransaction(TransactionDto transaction) {
         if (transaction.getFromAccountId() == null || transaction.getToAccountId() == null) {
-            throw new IllegalArgumentException("Invalid accounts or insufficient amount");
+            throw new IllegalArgumentException("One or both account IDs are invalid");
         }
         AccountDto fromAccount = restTemplate
                 .getForObject("http://localhost:8081/accounts/" + transaction.getFromAccountId(), AccountDto.class);
@@ -54,7 +54,7 @@ public class TransactionsServiceImpl implements TransactionsService {
     }
 
     @Override
-    @Transactional
+    @Transactional(noRollbackFor = IllegalArgumentException.class)
     public Transaction executeTransaction(TransactionDto transaction) {
         if (transaction.getToAccountId() == null || transaction.getFromAccountId() == null) {
             throw new IllegalArgumentException("Invalid accounts or insufficient amount");
@@ -101,12 +101,15 @@ public class TransactionsServiceImpl implements TransactionsService {
             map.put("fromAccountId", transaction.getFrom_account_id());
             map.put("toAccountId", transaction.getTo_account_id());
             map.put("amount", "+" + transaction.getAmount());
-            if (transaction.getTo_account_id().equals(accountId) && transaction.getStatus() == TransactionStatus.SUCCESS) {
+            if (transaction.getTo_account_id().equals(accountId)
+                    && transaction.getStatus() == TransactionStatus.SUCCESS) {
                 map.put("status", "SUCCESS DEPOSIT");
-            } else if (transaction.getTo_account_id().equals(accountId) && transaction.getStatus() == TransactionStatus.FAILED) {
+            } else if (transaction.getTo_account_id().equals(accountId)
+                    && transaction.getStatus() == TransactionStatus.FAILED) {
                 map.put("status", "FAILED DEPOSIT");
 
-            } else if (transaction.getFrom_account_id().equals(accountId) && transaction.getStatus() == TransactionStatus.SUCCESS) {
+            } else if (transaction.getFrom_account_id().equals(accountId)
+                    && transaction.getStatus() == TransactionStatus.SUCCESS) {
                 map.put("status", "SUCCESS WITHDRAWAL");
             } else {
                 map.put("status", "FAILED WITHDRAWAL");
@@ -130,7 +133,8 @@ public class TransactionsServiceImpl implements TransactionsService {
         return transactionsDao.getLatestTransactionByAccountId(accountId);
     }
 
-    private Boolean validateTransactionAccounts(TransactionDto transaction, AccountDto fromAccount, AccountDto toAccount) {
+    private Boolean validateTransactionAccounts(TransactionDto transaction, AccountDto fromAccount,
+            AccountDto toAccount) {
         if (transaction.getToAccountId() == null || transaction.getFromAccountId() == null) {
             return false;
         }
@@ -147,7 +151,8 @@ public class TransactionsServiceImpl implements TransactionsService {
     }
 
     private Boolean validateTransactionAmount(Transaction transaction, AccountDto fromAccount) {
-        System.out.println("Validating transaction amount: " + transaction.getAmount() + " for account: " + fromAccount.getAccountId());
+        System.out.println("Validating transaction amount: " + transaction.getAmount() + " for account: "
+                + fromAccount.getAccountId());
         if (fromAccount.getBalance().compareTo(transaction.getAmount()) < 0) {
             return false;
         }

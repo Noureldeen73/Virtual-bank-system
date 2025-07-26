@@ -9,7 +9,6 @@ public class TransactionDto {
     private BigDecimal amount;
     private String description;
 
-
     public TransactionDto() {
     }
 
