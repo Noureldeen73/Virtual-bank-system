@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public class TransactionDto {
+    private UUID transactionId;
     private UUID fromAccountId;
     private UUID toAccountId;
     private BigDecimal amount;
@@ -42,5 +43,13 @@ public class TransactionDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public UUID getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(UUID transactionId) {
+        this.transactionId = transactionId;
     }
 }

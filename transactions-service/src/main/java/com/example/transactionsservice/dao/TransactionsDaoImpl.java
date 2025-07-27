@@ -43,8 +43,8 @@ public class TransactionsDaoImpl implements TransactionsDao {
     @Override
     public List<Transaction> getTransactionsByAccountId(UUID accountId) {
         return entityManager.createQuery(
-                "SELECT t FROM Transaction t WHERE t.from_account_id = :accountId or t.to_account_id = :accountId",
-                Transaction.class)
+                        "SELECT t FROM Transaction t WHERE t.from_account_id = :accountId or (t.to_account_id = :accountId AND t.status = 'SUCCESS')",
+                        Transaction.class)
                 .setParameter("accountId", accountId)
                 .getResultList();
     }
@@ -62,8 +62,8 @@ public class TransactionsDaoImpl implements TransactionsDao {
     @Override
     public Transaction getLatestTransactionByAccountId(UUID accountId) {
         List<Transaction> transactions = entityManager.createQuery(
-                "SELECT t FROM Transaction t WHERE t.from_account_id = :accountId or t.to_account_id = :accountId ORDER BY t.created_at DESC",
-                Transaction.class)
+                        "SELECT t FROM Transaction t WHERE t.from_account_id = :accountId or t.to_account_id = :accountId ORDER BY t.created_at DESC",
+                        Transaction.class)
                 .setParameter("accountId", accountId)
                 .setMaxResults(1)
                 .getResultList();

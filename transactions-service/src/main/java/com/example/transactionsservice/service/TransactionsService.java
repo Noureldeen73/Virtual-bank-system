@@ -17,7 +17,7 @@ public interface TransactionsService {
 
     void transactionFailed(UUID transactionId);
 
-    Map<String, Object> getTransactionsByAccountId(UUID accountId);
+    List<Map<String, Object>> getTransactionsByAccountId(UUID accountId);
 
     List<Transaction> getAllTransactions();
 

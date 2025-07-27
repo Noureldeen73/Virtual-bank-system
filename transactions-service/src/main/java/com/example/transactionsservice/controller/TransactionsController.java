@@ -3,12 +3,14 @@ package com.example.transactionsservice.controller;
 import com.example.transactionsservice.dto.TransactionDto;
 import com.example.transactionsservice.model.Transaction;
 import com.example.transactionsservice.service.TransactionsService;
+import com.example.transactionsservice.util.ResponseHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -20,7 +22,7 @@ public class TransactionsController {
 
     @GetMapping("/accounts/{accountId}/transactions")
     public ResponseEntity<?> getTransactions(@PathVariable("accountId") UUID accountId) {
-        Map<String, Object> transactions = transactionsService.getTransactionsByAccountId(accountId);
+        List<Map<String, Object>> transactions = transactionsService.getTransactionsByAccountId(accountId);
         if (transactions.isEmpty()) {
             Map<String, String> emptyResponse = new HashMap<>();
             emptyResponse.put("message", "No transactions found for this account");
@@ -34,17 +36,9 @@ public class TransactionsController {
     public ResponseEntity<?> initiateTransfer(@RequestBody TransactionDto transaction) {
         try {
             Transaction initiatedTransaction = transactionsService.initiateTransaction(transaction);
-            Map<String, Object> response = new HashMap<>();
-            response.put("transactionsId", initiatedTransaction.getId());
-            response.put("Status", initiatedTransaction.getStatus());
-            response.put("timestamp", initiatedTransaction.getCreated_at());
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            return ResponseHandler.generateResponse(initiatedTransaction, "", "200");
         } catch (IllegalArgumentException e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("status", "400");
-            response.put("error", "Bad Request");
-            response.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return ResponseHandler.generateResponse(null, e.getMessage().toString(), "400");
         }
     }
 
@@ -52,17 +46,9 @@ public class TransactionsController {
     public ResponseEntity<?> executeTransfer(@RequestBody TransactionDto transaction) {
         try {
             Transaction executeTransaction = transactionsService.executeTransaction(transaction);
-            Map<String, Object> response = new HashMap<>();
-            response.put("transactionsId", executeTransaction.getId());
-            response.put("Status", executeTransaction.getStatus());
-            response.put("timestamp", executeTransaction.getCreated_at());
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            return ResponseHandler.generateResponse(executeTransaction, "", "200");
         } catch (IllegalArgumentException e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("status", "400");
-            response.put("error", "Bad Request");
-            response.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return ResponseHandler.generateResponse(null, e.getMessage().toString(), "400");
         }
     }
 

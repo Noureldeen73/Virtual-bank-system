@@ -1,6 +1,8 @@
 package com.example.account.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,9 +88,12 @@ public class AccountService {
         if (initiationResponse.getStatusCode().isError()) {
             throw new RuntimeException(initiationResponse.getBody().toString());
         }
+        UUID transactionId =UUID.fromString(((Map<String, Object>) initiationResponse.getBody()).get("transactionId").toString());
+        Map<String, Object> executionPayload = new HashMap<>();
+        executionPayload.put("transactionId", transactionId);
         ResponseEntity<?> executionResponse = restTemplate.postForEntity(
-                "http://localhost:8082/transactions/transfer/execution",
-                req, Object.class);
+        "http://localhost:8082/transactions/transfer/execution",
+        executionPayload, Object.class);
         if (executionResponse.getStatusCode().isError()) {
             throw new RuntimeException(executionResponse.getBody().toString());
         }
