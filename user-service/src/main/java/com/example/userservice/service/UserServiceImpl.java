@@ -29,8 +29,8 @@ public class UserServiceImpl implements UserService {
             throw new IllegalStateException("Email already exists");
         }
 
-        String hashedPassword = BCrypt.hashpw(user.getPassword_hash(), BCrypt.gensalt());
-        user.setPassword_hash(hashedPassword);
+        String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+        user.setPassword(hashedPassword);
         userDao.createUser(user);
     }
 
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
         Optional<Users> userOptional = userDao.findByUsername(username);
         if (userOptional.isPresent()) {
             Users user = userOptional.get();
-            if (BCrypt.checkpw(password, user.getPassword_hash())) {
+            if (BCrypt.checkpw(password, user.getPassword())) {
                 return user; // Authentication successful
             } else {
                 throw new AccessDeniedException("Invalid credentials");

@@ -28,20 +28,21 @@ public class Users {
 
     @NotBlank(message = "Password cannot be blank")
     @Size(min = 6, max = 255, message = "Password must be at least 6 characters long")
-    @Column(length = 255, nullable = false)
-    private String password_hash;
+    @Column(length = 255, nullable = false, name = "password_hash")
+    private String password;
 
     @NotBlank(message = "First name cannot be blank")
     @Size(min = 1, max = 50, message = "First name must be at least 1 and at most 50 characters long")
     @Column(length = 50, nullable = false)
-    private String first_name;
+    private String firstName;
 
     @NotBlank(message = "Last name cannot be blank")
     @Size(min = 1, max = 50, message = "Last name must be at least 1 and at most 50 characters long")
     @Column(length = 50, nullable = false)
-    private String last_name;
+    private String lastName;
 
     private LocalDateTime created_at = LocalDateTime.now();
+
     public UUID getId() {
         return id;
     }
@@ -66,28 +67,28 @@ public class Users {
         this.email = email;
     }
 
-    public String getPassword_hash() {
-        return password_hash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassword_hash(String password_hash) {
-        this.password_hash = password_hash;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public LocalDateTime getCreated_at() {
@@ -104,8 +105,8 @@ public class Users {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", created_at=" + created_at +
                 '}';
     }
@@ -113,8 +114,8 @@ public class Users {
     public boolean isEmpty() {
         return username == null || username.isEmpty() ||
                email == null || email.isEmpty() ||
-               password_hash == null || password_hash.isEmpty() ||
-               first_name == null || first_name.isEmpty() ||
-               last_name == null || last_name.isEmpty();
+               password == null || password.isEmpty() ||
+               firstName == null || firstName.isEmpty() ||
+               lastName == null || lastName.isEmpty();
     }
 }

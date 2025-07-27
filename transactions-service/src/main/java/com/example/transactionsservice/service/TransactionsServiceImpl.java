@@ -55,7 +55,7 @@ public class TransactionsServiceImpl implements TransactionsService {
 
     @Override
     @Transactional(noRollbackFor = IllegalArgumentException.class)
-    public Transaction executeTransaction(TransactionDto transaction) {
+    public Transaction executeTransaction(UUID transactionId) {
         if (transaction.getToAccountId() == null || transaction.getFromAccountId() == null) {
             throw new IllegalArgumentException("Invalid accounts or insufficient amount");
         }
@@ -134,7 +134,7 @@ public class TransactionsServiceImpl implements TransactionsService {
     }
 
     private Boolean validateTransactionAccounts(TransactionDto transaction, AccountDto fromAccount,
-            AccountDto toAccount) {
+                                                AccountDto toAccount) {
         if (transaction.getToAccountId() == null || transaction.getFromAccountId() == null) {
             return false;
         }

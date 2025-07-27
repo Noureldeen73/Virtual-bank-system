@@ -29,7 +29,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Boolean existsByEmail(String email) {
         // Check if a user with the given email exists
-        Long count = em.createQuery("SELECT COUNT(u) FROM Users u WHERE u.email = :email", Long.class)
+        Long count = em.createQuery("SELECT COUNT(u) FROM Users u WHERE lower( u.email) = lower( :email)", Long.class)
                 .setParameter("email", email)
                 .getSingleResult();
         return count > 0;
@@ -38,7 +38,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Boolean existsByUsername(String username) {
         // Check if a user with the given username exists
-        Long count = em.createQuery("SELECT COUNT(u) FROM Users u WHERE u.username = :username", Long.class)
+        Long count = em.createQuery("SELECT COUNT(u) FROM Users u WHERE lower(u.username) = lower(:username)", Long.class)
                 .setParameter("username", username)
                 .getSingleResult();
         return count > 0;

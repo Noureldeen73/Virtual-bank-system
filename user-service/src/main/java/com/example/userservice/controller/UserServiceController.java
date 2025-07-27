@@ -3,6 +3,7 @@ package com.example.userservice.controller;
 
 import com.example.userservice.model.Users;
 import com.example.userservice.service.UserService;
+import com.example.userservice.util.ResponseHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,17 +32,9 @@ public class UserServiceController {
         System.out.println(user.toString());
         try {
             userService.registerUser(user);
-            Map<String,Object> response = new HashMap<>();
-            response.put("userId", user.getId());
-            response.put("username", user.getUsername());
-            response.put("message", "User registered successfully");
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            return ResponseHandler.createResponse(user, "User registered successfully", "201");
         } catch (IllegalStateException e) {
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("status", "409");
-            errorResponse.put("error", "Conflict");
-            errorResponse.put("message", "Username or email already exists");
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+            return ResponseHandler.createResponse(null, "Username or email already exists", "409");
         }
     }
     @PostMapping("/login")
@@ -51,16 +44,9 @@ public class UserServiceController {
 
         try {
             Users user = userService.AuthenticateUser(username, password);
-            Map<String, Object> response = new HashMap<>();
-            response.put("userId", user.getId());
-            response.put("username", user.getUsername());
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            return ResponseHandler.loginResponse(user, "User logged successfully", "200");
         } catch (AccessDeniedException | java.nio.file.AccessDeniedException e) {
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("status", "401");
-            errorResponse.put("error", "Unauthorized");
-            errorResponse.put("message", "Invalid username or password");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+            return ResponseHandler.loginResponse(null, "Invalid username or password", "401");
         }
     }
 
@@ -68,19 +54,9 @@ public class UserServiceController {
     public ResponseEntity<?> getUserProfile(@PathVariable("id") UUID id) {
         try{
             Users user = userService.getUserById(id);
-            Map<String, Object> response = new HashMap<>();
-            response.put("userId", user.getId());
-            response.put("username", user.getUsername());
-            response.put("email", user.getEmail());
-            response.put("firstName", user.getFirst_name());
-            response.put("lastName", user.getLast_name());
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            return ResponseHandler.profileResponse(user, "", "200");
         }catch (Exception e){
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("status", "404");
-            errorResponse.put("error", "Not Found");
-            errorResponse.put("message", "User with ID " + id + " not found");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+            return ResponseHandler.profileResponse(null, "User with ID " + id.toString() +  " not found", "404");
         }
     }
 }
