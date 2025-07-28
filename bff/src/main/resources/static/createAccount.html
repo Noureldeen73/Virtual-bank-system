@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Bank Account - BFF Banking</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="stylesheet/style.css" />
+  </head>
+  <body>
+    <!-- Animated background -->
+    <div class="background-animation">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+    </div>
+
+    <!-- Flash message container -->
+    <div
+      id="flashContainer"
+      class="position-fixed top-0 start-50 translate-middle-x"
+      style="z-index: 1060; margin-top: 20px"></div>
+
+    <div
+      class="container d-flex align-items-center justify-content-center min-vh-100">
+      <div class="create-account-container">
+        <!-- Header Section -->
+        <div class="text-center mb-4">
+          <div class="logo-container">
+            <i class="fas fa-university logo-icon"></i>
+          </div>
+          <h1 class="brand-title">Create Bank Account</h1>
+          <p class="brand-subtitle">Open your new account in minutes</p>
+        </div>
+
+        <div class="auth-card">
+          <div class="card-header">
+            <div class="account-type-header">
+              <i class="fas fa-plus-circle me-2"></i>
+              <span>New Account Setup</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <form id="createBankAccountForm" class="auth-form">
+              <div class="form-group">
+                <label for="accountType" class="form-label">
+                  <i class="fas fa-building icon"></i>Account Type
+                </label>
+                <div class="input-container">
+                  <select
+                    id="accountType"
+                    name="accountType"
+                    class="form-control"
+                    required>
+                    <option value="">Choose your account type</option>
+                    <option value="SAVINGS">Savings Account</option>
+                    <option value="CHECKING">Checking Account</option>
+                  </select>
+                  <div class="input-focus-border"></div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="amount" class="form-label">
+                  <i class="fas fa-dollar-sign icon"></i>Initial Deposit
+                </label>
+                <div class="input-container amount-input">
+                  <div class="currency-symbol">$</div>
+                  <input
+                    type="number"
+                    id="amount"
+                    name="amount"
+                    class="form-control amount-field"
+                    min="25"
+                    step="0.01"
+                    placeholder="25.00"
+                    required />
+                  <div class="input-focus-border"></div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-success">
+                  <i class="fas fa-plus-circle me-2"></i>Create Account
+                  <div class="btn-overlay"></div>
+                </button>
+                <a href="home.html" class="btn btn-outline">
+                  <i class="fas fa-arrow-left me-2"></i>Back to Home
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="JS/createAccount.js"></script>
+  </body>
+</html>
