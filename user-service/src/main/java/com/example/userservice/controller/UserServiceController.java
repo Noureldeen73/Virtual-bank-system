@@ -1,6 +1,7 @@
 package com.example.userservice.controller;
 
 
+import com.example.userservice.dto.UserDto;
 import com.example.userservice.model.Users;
 import com.example.userservice.service.UserService;
 import com.example.userservice.util.ResponseHandler;
@@ -32,21 +33,21 @@ public class UserServiceController {
         System.out.println(user.toString());
         try {
             userService.registerUser(user);
-            return ResponseHandler.createResponse(user, "User registered successfully", "201");
-        } catch (IllegalStateException e) {
-            return ResponseHandler.createResponse(null, "Username or email already exists", "409");
+            return ResponseHandler.createResponse(user, "User registered successfully", 201);
+        } catch (Exception e) {
+            return ResponseHandler.createResponse(null, e.getMessage().toString(), 409);
         }
     }
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody Map<String, String> credentials){
-        String username = credentials.get("username");
-        String password = credentials.get("password");
+    public ResponseEntity<?> loginUser(@RequestBody UserDto credentials) {
+        String username = credentials.getUsername();
+        String password = credentials.getPassword();
 
         try {
             Users user = userService.AuthenticateUser(username, password);
-            return ResponseHandler.loginResponse(user, "User logged successfully", "200");
-        } catch (AccessDeniedException | java.nio.file.AccessDeniedException e) {
-            return ResponseHandler.loginResponse(null, "Invalid username or password", "401");
+            return ResponseHandler.loginResponse(user, "User logged successfully", 200);
+        } catch (Exception e) {
+            return ResponseHandler.loginResponse(null, e.getMessage(), 401);
         }
     }
 
@@ -54,9 +55,9 @@ public class UserServiceController {
     public ResponseEntity<?> getUserProfile(@PathVariable("id") UUID id) {
         try{
             Users user = userService.getUserById(id);
-            return ResponseHandler.profileResponse(user, "", "200");
+            return ResponseHandler.profileResponse(user, "", 200);
         }catch (Exception e){
-            return ResponseHandler.profileResponse(null, "User with ID " + id.toString() +  " not found", "404");
+            return ResponseHandler.profileResponse(null, "User with ID " + id.toString() +  " not found", 404);
         }
     }
 }

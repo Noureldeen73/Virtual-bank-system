@@ -2,6 +2,7 @@ package com.example.userservice.dao;
 
 import com.example.userservice.model.Users;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,7 +18,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void createUser(Users user) {
         em.persist(user);
-        em.flush();  // Ensure the user is saved immediately
+        em.flush();
     }
 
     @Override

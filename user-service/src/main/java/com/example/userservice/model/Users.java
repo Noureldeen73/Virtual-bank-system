@@ -32,12 +32,12 @@ public class Users {
     private String password;
 
     @NotBlank(message = "First name cannot be blank")
-    @Size(min = 1, max = 50, message = "First name must be at least 1 and at most 50 characters long")
+    @Size(min = 3, max = 50, message = "First name must be at least 1 and at most 50 characters long")
     @Column(length = 50, nullable = false)
     private String firstName;
 
     @NotBlank(message = "Last name cannot be blank")
-    @Size(min = 1, max = 50, message = "Last name must be at least 1 and at most 50 characters long")
+    @Size(min = 3, max = 50, message = "Last name must be at least 1 and at most 50 characters long")
     @Column(length = 50, nullable = false)
     private String lastName;
 
