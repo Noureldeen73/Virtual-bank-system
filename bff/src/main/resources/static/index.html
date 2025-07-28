@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>BFF - Banking Finance Framework</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="stylesheet/style.css" />
+  </head>
+  <body>
+    <div class="background-animation">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+    </div>
+
+    <div
+      id="flashContainer"
+      class="position-fixed top-0 start-50 translate-middle-x"
+      style="z-index: 1060; margin-top: 20px"></div>
+
+    <div
+      class="container d-flex align-items-center justify-content-center min-vh-100">
+      <div class="auth-container">
+        <div class="text-center mb-4">
+          <div class="logo-container">
+            <i class="fas fa-university logo-icon"></i>
+          </div>
+          <h1 class="brand-title">BFF Banking</h1>
+        </div>
+
+        <div class="auth-card">
+          <div class="card-header">
+            <div class="tab-switcher">
+              <button id="loginTab" class="tab-button active" type="button">
+                <i class="fas fa-sign-in-alt me-2"></i>Login
+              </button>
+              <button id="registerTab" class="tab-button" type="button">
+                <i class="fas fa-user-plus me-2"></i>Register
+              </button>
+              <div class="tab-indicator"></div>
+            </div>
+          </div>
+          <div class="card-body">
+            <form id="loginForm" class="auth-form">
+              <div class="form-group">
+                <label for="loginUsername" class="form-label">
+                  <i class="fas fa-user icon"></i>Username
+                </label>
+                <div class="input-container">
+                  <input
+                    type="text"
+                    id="loginUsername"
+                    name="username"
+                    class="form-control"
+                    placeholder="Enter your username"
+                    required />
+                  <div class="input-focus-border"></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="loginPassword" class="form-label">
+                  <i class="fas fa-lock icon"></i>Password
+                </label>
+                <div class="input-container">
+                  <input
+                    type="password"
+                    id="loginPassword"
+                    name="password"
+                    class="form-control"
+                    placeholder="Enter your password"
+                    required />
+                  <div class="input-focus-border"></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <button id="loginButton" type="submit" class="btn btn-primary">
+                  <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                  <div class="btn-overlay"></div>
+                </button>
+              </div>
+            </form>
+
+            <form id="registerForm" class="auth-form d-none">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="registerFirstName" class="form-label">
+                      <i class="fas fa-user icon"></i>First Name
+                    </label>
+                    <div class="input-container">
+                      <input
+                        type="text"
+                        id="registerFirstName"
+                        name="firstName"
+                        class="form-control"
+                        placeholder="First name"
+                        required />
+                      <div class="input-focus-border"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="registerLastName" class="form-label">
+                      <i class="fas fa-user icon"></i>Last Name
+                    </label>
+                    <div class="input-container">
+                      <input
+                        type="text"
+                        id="registerLastName"
+                        name="lastName"
+                        class="form-control"
+                        placeholder="Last name"
+                        required />
+                      <div class="input-focus-border"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="registerUsername" class="form-label">
+                  <i class="fas fa-user-circle icon"></i>Username
+                </label>
+                <div class="input-container">
+                  <input
+                    type="text"
+                    id="registerUsername"
+                    name="username"
+                    class="form-control"
+                    placeholder="Choose a username"
+                    required />
+                  <div class="input-focus-border"></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="registerEmail" class="form-label">
+                  <i class="fas fa-envelope icon"></i>Email Address
+                </label>
+                <div class="input-container">
+                  <input
+                    type="email"
+                    id="registerEmail"
+                    name="email"
+                    class="form-control"
+                    placeholder="your.email@example.com"
+                    required />
+                  <div class="input-focus-border"></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="registerPassword" class="form-label">
+                  <i class="fas fa-lock icon"></i>Password
+                </label>
+                <div class="input-container">
+                  <input
+                    type="password"
+                    id="registerPassword"
+                    name="password"
+                    class="form-control"
+                    placeholder="Create a strong password"
+                    required />
+                  <div class="input-focus-border"></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <button id="submitButton" type="submit" class="btn btn-success">
+                  <i class="fas fa-user-plus me-2"></i>Create Account
+                  <div class="btn-overlay"></div>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="JS/main.js"></script>
+  </body>
+</html>
