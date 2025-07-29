@@ -14,4 +14,5 @@ public class TransferRequest {
     private UUID fromAccountId;
     private UUID toAccountId;
     private BigDecimal amount;
+    private String description;
 }

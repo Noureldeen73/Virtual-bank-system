@@ -72,15 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Transfer button click handler
   transferBtn.addEventListener("click", function () {
-    // Check if user is logged in
-    const isLoggedIn = checkUserSession();
-
-    if (isLoggedIn) {
-      window.location.href = "/transfer.html";
-    } else {
-      // Redirect to login page
-      window.location.href = "/index.html";
-    }
+    window.location.href = "/transfer.html";
   });
 
   // Create bank account button click handler
@@ -106,13 +98,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.location.href = "/index.html";
   });
-
-  // Simple session check function (placeholder)
-  function checkUserSession() {
-    // You can implement proper session/token validation here
-    // For now, check if there's a token in localStorage or sessionStorage
-    return localStorage.getItem("userToken") !== null;
-  }
 });
 
 // Handle URL hash to show register tab if coming from create account button

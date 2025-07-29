@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
         );
         setTimeout(() => {
           window.location.href = "/home.html";
-        }, 2000);
+        }, 1500);
       } else {
         showFlash(
           result.message || "Failed to create bank account. Please try again.",

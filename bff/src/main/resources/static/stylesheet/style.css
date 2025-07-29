@@ -1660,3 +1660,285 @@ select.form-control option {
     font-size: 0.8rem;
   }
 }
+
+/* ================================
+   TRANSFER PAGE STYLES
+   ================================ */
+
+.transfer-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  padding-top: 120px;
+}
+
+.transfer-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  animation: slideUp 0.8s ease-out;
+}
+
+.transfer-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 1rem;
+  background: rgba(99, 102, 241, 0.1);
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.transfer-form {
+  animation: slideIn 0.4s ease-out;
+}
+
+/* Transfer Summary */
+.transfer-summary {
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.1),
+    rgba(99, 102, 241, 0.05)
+  );
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  animation: slideUp 0.4s ease-out;
+}
+
+.summary-header {
+  display: flex;
+  align-items: center;
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.summary-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.summary-row.total {
+  padding-top: 0.75rem;
+  border-top: 2px solid rgba(99, 102, 241, 0.2);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.summary-row.total span:last-child {
+  color: var(--primary-color);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+/* Optional label styling */
+.optional {
+  color: var(--text-light);
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+/* Enhanced textarea styling */
+textarea.form-control {
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+}
+
+/* Account dropdown enhancements */
+.account-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+}
+
+.account-balance {
+  color: var(--success-color);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Loading states for transfer */
+.transfer-form.loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.transfer-form.loading .btn {
+  position: relative;
+}
+
+.transfer-form.loading .btn::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-left: 8px;
+}
+
+/* Error states */
+.form-control.error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.form-control.error:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.error-message {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Success states */
+.form-control.success {
+  border-color: var(--success-color);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.success-message {
+  color: var(--success-color);
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Transfer confirmation modal styles */
+.transfer-confirmation {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  border-radius: var(--border-radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-xl);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  animation: slideUp 0.4s ease-out;
+}
+
+.confirmation-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  background: linear-gradient(
+    135deg,
+    var(--success-color),
+    var(--success-dark)
+  );
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+  animation: pulse 2s ease-in-out infinite alternate;
+}
+
+.confirmation-title {
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.confirmation-details {
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  margin: 1.5rem 0;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+/* Responsive design for transfer page */
+@media (max-width: 768px) {
+  .transfer-container {
+    padding-top: 100px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    max-width: 500px;
+  }
+
+  .transfer-card {
+    margin: 0;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  .summary-row {
+    font-size: 0.85rem;
+  }
+
+  .summary-row.total {
+    font-size: 0.9rem;
+  }
+
+  .summary-row.total span:last-child {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .transfer-container {
+    padding: 80px 0.5rem 2rem;
+  }
+
+  .transfer-card .card-body {
+    padding: 1.25rem;
+  }
+
+  .transfer-header {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+
+  .brand-title {
+    font-size: 1.75rem;
+  }
+
+  .brand-subtitle {
+    font-size: 1rem;
+  }
+
+  .form-actions {
+    gap: 0.75rem;
+  }
+
+  .btn {
+    padding: 12px 20px;
+    font-size: 0.9rem;
+  }
+}

@@ -178,37 +178,55 @@ function getTransactionClass(type) {
 }
 
 // Create transaction item
-function createTransactionItem(transaction) {
-  const isPositive = transaction.type?.toLowerCase() === "deposit";
-  const amountClass = isPositive ? "positive" : "negative";
-  const amountSign = isPositive ? "+" : "-";
+function createTransactionItem(transaction, currentAccountId) {
+  // Parse the amount (remove + sign if present)
+  let amount = parseFloat(transaction.amount.toString().replace("+", ""));
+
+  // Determine if this is incoming or outgoing based on account IDs
+  const isIncoming = transaction.toAccountId === currentAccountId;
+  const isOutgoing = transaction.fromAccountId === currentAccountId;
+
+  let transactionType, icon, amountClass, amountSign;
+
+  if (isIncoming) {
+    // Money coming to this account
+    transactionType = "Received";
+    icon = "fas fa-arrow-down";
+    amountClass = "positive";
+    amountSign = "+";
+  } else if (isOutgoing) {
+    // Money going from this account
+    transactionType = "Sent";
+    icon = "fas fa-arrow-up";
+    amountClass = "negative";
+    amountSign = "-";
+  } else {
+    // Fallback
+    transactionType = "Transaction";
+    icon = "fas fa-exchange-alt";
+    amountClass = amount >= 0 ? "positive" : "negative";
+    amountSign = amount >= 0 ? "+" : "-";
+  }
 
   return `
         <li class="transaction-item">
             <div class="transaction-details">
-                <div class="transaction-icon ${getTransactionClass(
-                  transaction.type
-                )}">
-                    <i class="${getTransactionIcon(transaction.type)}"></i>
+                <div class="transaction-icon ${amountClass}">
+                    <i class="${icon}"></i>
                 </div>
                 <div class="transaction-info">
-                    <h6>${
-                      transaction.description ||
-                      transaction.type ||
-                      "Transaction"
-                    }</h6>
-                    <p>${formatDateTime(
-                      transaction.date || transaction.createdAt
-                    )}</p>
+                    <h6>${transactionType}</h6>
+                    <p>${formatDateTime(transaction.createdAt)}</p>
+                    <small class="text-muted">Status: ${
+                      transaction.status
+                    }</small>
                 </div>
             </div>
             <div class="transaction-amount">
                 <p class="amount ${amountClass}">${amountSign}${formatCurrency(
-    Math.abs(transaction.amount || 0)
+    Math.abs(amount)
   )}</p>
-                <p class="date">${formatDate(
-                  transaction.date || transaction.createdAt
-                )}</p>
+                <p class="date">${formatDate(transaction.createdAt)}</p>
             </div>
         </li>
     `;
@@ -235,7 +253,7 @@ function createAccountCard(account) {
                           account.accountNumber?.slice(-4) || "0000"
                         }
                     </div>
-                    <h3 class="account-balance">${formatCurrency(
+                    <h3 class="account-balance" style="font-size: 2rem; font-weight: bold; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.3); margin-top: 1rem;">${formatCurrency(
                       account.balance || 0
                     )}</h3>
                 </div>
@@ -257,7 +275,10 @@ function createAccountCard(account) {
                     <ul class="transactions-list">
                         ${recentTransactions
                           .map((transaction) =>
-                            createTransactionItem(transaction)
+                            createTransactionItem(
+                              transaction,
+                              account.accountId
+                            )
                           )
                           .join("")}
                     </ul>

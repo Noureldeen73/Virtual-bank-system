@@ -152,6 +152,7 @@ public class TransactionsServiceImpl implements TransactionsService {
         if (transaction.getDescription() != null && !transaction.getDescription().isEmpty()) {
             map.put("description", transaction.getDescription());
         }
+        map.put("createdAt", transaction.getCreated_at());
         return map;
     }
 
