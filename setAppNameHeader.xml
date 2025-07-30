@@ -1,0 +1,13 @@
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="setAppNameHeader">
+   <filter source="get-property('application.name')" regex="vbank-portal">
+      <then>
+         <property name="APP-NAME" value="PORTAL" scope="transport" action="set"/>
+      </then>
+   </filter>
+
+   <filter source="get-property('application.name')" regex="vbank-mobile">
+      <then>
+         <property name="APP-NAME" value="MOBILE" scope="transport" action="set"/>
+      </then>
+   </filter>
+</sequence>

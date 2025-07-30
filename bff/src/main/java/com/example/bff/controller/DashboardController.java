@@ -35,26 +35,29 @@ public class DashboardController {
   public ResponseEntity<?> getDashboard(@PathVariable UUID userId) {
     String UserUrl = "http://localhost:8080/users/" + userId + "/profile";
     String AccountsUrl = "http://localhost:8081/users/" + userId + "/accounts";
-
+    List<Map<String, Object>> accountsResponse;
     try {
       // Log the incoming request
       loggingProducer.sendLog("{\"userId\": \"" + userId + "\"}", "Request");
 
       Map<String, Object> userResponse = restTemplate.getForObject(UserUrl, Map.class);
-      List<Map<String, Object>> accountsResponse = restTemplate.getForObject(AccountsUrl, List.class);
+      try{
+        accountsResponse = restTemplate.getForObject(AccountsUrl, List.class);
 
-      for (Map<String, Object> account : accountsResponse) {
-        UUID accountId = UUID.fromString(account.get("accountId").toString());
-        String transactionsUrl = "http://localhost:8082/accounts/" + accountId + "/transactions";
+        for (Map<String, Object> account : accountsResponse) {
+          UUID accountId = UUID.fromString(account.get("accountId").toString());
+          String transactionsUrl = "http://localhost:8082/accounts/" + accountId + "/transactions";
+          List<Map<String, Object>> transactionsResponse;
+          try{
+            transactionsResponse = restTemplate.getForObject(transactionsUrl, List.class);
+          }catch (Exception e) {
+            transactionsResponse = List.of();
+          }
+          account.put("transactions", transactionsResponse);
 
-        List<Map<String, Object>> transactionsResponse;
-        try {
-          transactionsResponse = restTemplate.getForObject(transactionsUrl, List.class);
-        } catch (Exception e) {
-          // Handle case where no transactions exist or an error occurs
-          transactionsResponse = List.of(); // Empty list if no transactions
         }
-        account.put("transactions", transactionsResponse);
+      }catch(Exception e){
+        accountsResponse = List.of();
       }
 
       Map<String, Object> response = new LinkedHashMap<>();
