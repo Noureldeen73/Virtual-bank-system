@@ -1,7 +1,6 @@
 package com.example.userservice.util;
 
 import com.example.userservice.model.Users;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
@@ -26,7 +25,7 @@ public class ResponseHandler {
     }
 
     public static ResponseEntity<?> loginResponse(Users user, String message, int status) {
-        if( user == null) {
+        if (user == null) {
             Map<String, Object> mp = new HashMap<>();
             mp.put("status", status);
             mp.put("error", "Unauthorized");
@@ -38,6 +37,7 @@ public class ResponseHandler {
         mp.put("username", user.getUsername());
         return ResponseEntity.status(status).contentType(MediaType.APPLICATION_JSON).body(mp);
     }
+
     public static ResponseEntity<?> profileResponse(Users user, String message, int status) {
         if (user == null) {
             Map<String, Object> mp = new HashMap<>();
@@ -55,4 +55,3 @@ public class ResponseHandler {
         return ResponseEntity.status(status).contentType(MediaType.APPLICATION_JSON).body(mp);
     }
 }
-

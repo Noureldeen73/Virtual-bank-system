@@ -2,7 +2,6 @@ package com.example.userservice.dao;
 
 import com.example.userservice.model.Users;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
