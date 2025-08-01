@@ -3,12 +3,10 @@ package com.example.logging.model;
 import java.time.Instant;
 import java.util.UUID;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "log_entity")
 public class LogEntity {
     @Id
     @GeneratedValue

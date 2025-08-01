@@ -46,6 +46,7 @@ const registerTab = document.getElementById("registerTab");
 const loginForm = document.getElementById("loginForm");
 const registerForm = document.getElementById("registerForm");
 
+// Switching berween login and register forms
 loginTab.onclick = function (e) {
   e.preventDefault();
   loginTab.classList.add("active");
@@ -54,6 +55,7 @@ loginTab.onclick = function (e) {
   registerForm.classList.add("d-none");
 
   loginForm.style.animation = "slideIn 0.4s ease-out";
+    // Clear the Register form fields
   document.getElementById("registerUsername").value = "";
   document.getElementById("registerEmail").value = "";
   document.getElementById("registerFirstName").value = "";
@@ -69,20 +71,25 @@ registerTab.onclick = function (e) {
   loginForm.classList.add("d-none");
 
   registerForm.style.animation = "slideIn 0.4s ease-out";
+    // Clear the Login form fields
   document.getElementById("loginUsername").value = "";
   document.getElementById("loginPassword").value = "";
 };
 
+// Regex for validating email format
 function isValidEmail(email) {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return emailRegex.test(email);
 }
 
+// Event listener for Login form
 loginForm.addEventListener("submit", async function (e) {
   e.preventDefault();
+  // Get the values from the form fields
   const username = document.getElementById("loginUsername").value.trim();
   const password = document.getElementById("loginPassword").value;
 
+    // Validate the input fields
   if (!username || !password) {
     showFlash("Please fill in both fields.", "warning");
     return;
@@ -96,7 +103,9 @@ loginForm.addEventListener("submit", async function (e) {
     return;
   }
 
+    // Prepare the data to be sent in the request
   const data = { username, password };
+    // Send the login request to the server
   try {
     const res = await fetch("/api/login", {
       method: "POST",
@@ -104,29 +113,34 @@ loginForm.addEventListener("submit", async function (e) {
       body: JSON.stringify(data),
     });
 
+
     const result = await res.json();
 
     if (res.ok) {
+      // If login is successful, store the flash message and redirect and store user data for later use
       storeFlashMessage("Login successful!", "success");
       sessionStorage.setItem("username", result.username);
       sessionStorage.setItem("userId", result.userId);
       window.location.href = "/home.html ";
     } else {
-      showFlash(result.message || "Login failed. Please try again.", "danger");
+      showFlash(result.message || "Login failed please try again", "danger");
     }
   } catch (error) {
-    showFlash("Invalid credentials", "danger");
+    showFlash("Username or password is incorrect", "danger");
   }
 });
 
+// Event listener for Register form
 registerForm.addEventListener("submit", async function (e) {
   e.preventDefault();
+    // Get the values from the form fields
   const username = document.getElementById("registerUsername").value.trim();
   const email = document.getElementById("registerEmail").value.trim();
   const firstName = document.getElementById("registerFirstName").value.trim();
   const lastName = document.getElementById("registerLastName").value.trim();
   const password = document.getElementById("registerPassword").value;
 
+    // Validate the input fields
   if (!username || !email || !firstName || !lastName || !password) {
     showFlash("Please fill in all fields.", "warning");
     return;
@@ -152,14 +166,18 @@ registerForm.addEventListener("submit", async function (e) {
     return;
   }
 
+    // Prepare the data to be sent in the request
   const data = { username, email, firstName, lastName, password };
+    // Send the registration request to the server
   try {
     const res = await fetch("/api/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
+    // Parse the response from the server
     const result = await res.json();
+    // Check if the registration was successful
     if (res.ok) {
       showFlash("Registration successful! You can now login.", "success");
       loginTab.click();
@@ -170,6 +188,7 @@ registerForm.addEventListener("submit", async function (e) {
       );
     }
   } catch (error) {
-    showFlash("Network error. Please try again.", "danger");
+    console.error("Error during registration:", error);
+    showFlash("Username or email already exists", "danger");
   }
 });

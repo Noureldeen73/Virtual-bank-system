@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- Including bootstrap, font-awesome, and custom styles -->
   <head>
     <meta charset="UTF-8" />
     <title>BFF - Banking Finance Framework</title>
@@ -21,13 +22,16 @@
       <div class="shape shape-3"></div>
     </div>
 
+    <!-- Flash message container -->
     <div
       id="flashContainer"
       class="position-fixed top-0 start-50 translate-middle-x"
       style="z-index: 1060; margin-top: 20px"></div>
 
+    <!-- Whole page container -->
     <div
       class="container d-flex align-items-center justify-content-center min-vh-100">
+      <!-- Title and logo container-->
       <div class="auth-container">
         <div class="text-center mb-4">
           <div class="logo-container">
@@ -36,6 +40,7 @@
           <h1 class="brand-title">BFF Banking</h1>
         </div>
 
+        <!-- Authentication card with tabs for login and registration -->
         <div class="auth-card">
           <div class="card-header">
             <div class="tab-switcher">
@@ -48,6 +53,7 @@
               <div class="tab-indicator"></div>
             </div>
           </div>
+          <!-- Login form -->
           <div class="card-body">
             <form id="loginForm" class="auth-form">
               <div class="form-group">
@@ -87,7 +93,7 @@
                 </button>
               </div>
             </form>
-
+            <!-- Register form -->
             <form id="registerForm" class="auth-form d-none">
               <div class="row">
                 <div class="col-md-6">
